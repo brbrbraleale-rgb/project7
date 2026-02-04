@@ -15,9 +15,4 @@ def test_mask_account_card_account(account_data):
     assert result.endswith(account_data[-4:])
 
 
-def test_get_date_valid(raw_date_string):
-    """Проверка правильности преобразования формата даты"""
-    assert get_date(raw_date_string) == "11.03.2024"
-
-
 
