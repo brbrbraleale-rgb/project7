@@ -2,24 +2,28 @@ import pytest
 from processing import filter_by_state, sort_by_date
 
 
-
-def test_filter_by_state_default(sample_data):
-    """Проверка фильтрации по умолчанию (EXECUTED)"""
-    result = filter_by_state(sample_data)
-    assert len(result) == 2
-    assert result[0]["id"] == 1
-    assert result[1]["id"] == 3
-
-def test_filter_by_state_canceled(sample_data):
-    """Проверка фильтрации по конкретному статусу"""
-    result = filter_by_state(sample_data, state="CANCELED")
+def test_filter_executed(simple_list):
+    """Проверка, что остается только EXECUTED"""
+    result = filter_by_state(simple_list, "EXECUTED")
     assert len(result) == 1
-    assert result[0]["id"] == 2
+    assert result[0]["state"] == "EXECUTED"
+
+def test_filter_empty(simple_list):
+    """Проверка, что при отсутствии совпадений список пуст"""
+    result = filter_by_state(simple_list, "PENDING")
+    assert len(result) == 0
 
 
-def test_sort_by_date_ascending(sample_data):
-    """Проверка сортировки от старых к новым (reverse=False)"""
-    data_with_dates = [i for i in sample_data if "date" in i]
-    result = sort_by_date(data_with_dates, reverse=False)
-    assert result[0]["date"] == "2021-01-01"
-    assert result[-1]["date"] == "2025-12-31"
+@pytest.mark.parametrize("reverse_flag, expected_date", [
+    (True, "2024-01-01"),  # Сначала свежая дата
+    (False, "2023-01-01")  # Сначала старая дата
+])
+def test_sort_order(simple_list, reverse_flag, expected_date):
+    """Проверка направления сортировки (прямая и обратная)"""
+    result = sort_by_date(simple_list, reverse=reverse_flag)
+    assert result[0]["date"] == expected_date
+
+def test_sort_result_length(simple_list):
+    """Проверка, что после сортировки количество элементов не изменилось"""
+    result = sort_by_date(simple_list)
+    assert len(result) == 2
