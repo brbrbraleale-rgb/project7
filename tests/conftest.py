@@ -31,4 +31,19 @@ def sample_data():
         {"id": 5, "date": "2021-01-01"}  # Случай без ключа state
     ]
 
+@pytest.fixture
+def card_data():
+    """Фикстура для данных карты"""
+    return "Visa Platinum 7000792289606361"
+
+@pytest.fixture
+def account_data():
+    """Фикстура для данных счета"""
+    return "Счет 73654108430135874305"
+
+@pytest.fixture
+def raw_date_string():
+    """Фикстура для строки с датой"""
+    return "2024-03-11T02:26:18.671407"
+
 
