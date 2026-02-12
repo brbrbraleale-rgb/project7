@@ -54,3 +54,32 @@ def test_transaction_descriptions_structure(input_data, expected_length):
     """Тест проверяет работу генератора с разными входными структурами."""
     result = list(transaction_descriptions(input_data))
     assert len(result) == expected_length
+
+
+import pytest
+from generators import card_number_generator
+
+
+"""Проверка корректности формата и значений (используем фикстуру)"""
+def test_card_generator_format(card_range_data):
+    gen = card_number_generator(card_range_data["start"], card_range_data["stop"])
+    result = list(gen)
+
+    assert len(result) == 3
+    assert result[0] == "0000 0000 0000 0001"
+    assert result[-1] == "0000 0000 0000 0003"
+    assert all(len(card) == 19 for card in result)
+
+
+""" Параметризация для проверки различных диапазонов"""
+@pytest.mark.parametrize("start, stop, expected_len, first_val", [
+    (10, 10, 1, "0000 0000 0000 0010"),
+    (9999999999999998, 9999999999999999, 2, "9999 9999 9999 9998"),
+    (1, 0, 0, None)  # Пустой диапазон
+])
+def test_card_generator_ranges(start, stop, expected_len, first_val):
+    gen = list(card_number_generator(start, stop))
+
+    assert len(gen) == expected_len
+    if expected_len > 0:
+        assert gen[0] == first_val
