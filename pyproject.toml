@@ -1,28 +1,25 @@
-
-[project]
+[tool.poetry]
 name = "python-my-project1"
 version = "0.1.0"
 description = ""
-authors = [
-    {name = "Your Name",email = "you@example.com"}
-]
+authors = ["Your Name <you@example.com>"]
 readme = "README.md"
-requires-python = ">=3.14"
-dependencies = [
+packages = [
+    { include = "src" }
 ]
+
+[tool.poetry.dependencies]
+python = ">=3.14"
+flake8 = "^7.3.0"
+black = "^25.12.0"
+isort = "^7.0.0"
+mypy = "^1.19.1"
+pytest = "^9.0.2"
 
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
-
-[dependency-groups]
-lint = [
-    "flake8 (>=7.3.0,<8.0.0)",
-    "black (>=25.12.0,<26.0.0)",
-    "isort (>=7.0.0,<8.0.0)",
-    "mypy (>=1.19.1,<2.0.0)"
-]
 
 [tool.black]
 line-length = 119
@@ -37,4 +34,11 @@ disallow_untyped_defs = true
 warn_return_any = true
 exclude = 'venv'
 
+[tool.pytest.ini_options]
+pythonpath = ["src"]
 
+
+[dependency-groups]
+dev = [
+    "pytest-cov (>=7.0.0,<8.0.0)"
+]
