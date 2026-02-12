@@ -9,3 +9,11 @@ def filter_by_currency(transactions, currency_code):
                 yield transaction
         except (KeyError, TypeError):
             continue
+
+
+def transaction_descriptions(transactions):
+    """
+    Генератор, который поочередно возвращает описание каждой транзакции.
+    """
+    for transaction in transactions:
+        yield transaction.get("description", "Описание отсутствует")
