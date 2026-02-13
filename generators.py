@@ -7,7 +7,7 @@ def filter_by_currency(transactions, currency_code):
             current_currency = transaction["operationAmount"]["currency"]["code"]
             if current_currency == currency_code:
                 yield transaction
-        except (KeyError, TypeError):
+        except KeyError, TypeError:
             continue
 
 
