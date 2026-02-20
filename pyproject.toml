@@ -3,6 +3,7 @@
 name = "python-my-project1"
 version = "0.1.0"
 description = ""
+pytest = "^9.0.2"
 authors = [
     {name = "Your Name",email = "you@example.com"}
 ]
@@ -36,5 +37,13 @@ force_single_line = true
 disallow_untyped_defs = true
 warn_return_any = true
 exclude = 'venv'
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[dependency - groups]
+dev = [
+    "pytest-cov (>=7.0.0,<8.0.0)"
+]
 
 
