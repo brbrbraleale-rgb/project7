@@ -11,6 +11,12 @@ packages = [
     { include = "src" }
 ]
 
+[dependency-groups]
+dev = [
+    "pytest-cov (>=7.0.0,<8.0.0)"
+]
+
+
 [tool.poetry.dependencies]
 python = ">=3.14"
 flake8 = "^7.3.0"
@@ -40,9 +46,5 @@ exclude = 'venv'
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 
-[dependency - groups]
-dev = [
-    "pytest-cov (>=7.0.0,<8.0.0)"
-]
 
 
