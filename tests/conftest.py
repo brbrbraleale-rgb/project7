@@ -34,7 +34,7 @@ def account_input():
 def date_input():
     """Строка с датой в данном формате"""
     return "2024-05-20T10:00:00"
-
+  
 
 @pytest.fixture
 def sample_transactions():
@@ -50,5 +50,6 @@ def sample_transactions():
 def card_range_data():
     """Фикстура, возвращающая параметры для диапазона генерации."""
     return {"start": 1, "stop": 3}
+
 
 
