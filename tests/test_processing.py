@@ -10,7 +10,7 @@ def test_filter_executed(simple_list):
 
 def test_filter_empty(simple_list):
     """Проверка, что при отсутствии совпадений список пуст"""
-    result = filter_by_state(simple_list, "PENDING")
+    result = filter_by_state(simple_list, state="PENDING")
     assert len(result) == 0
 
 
