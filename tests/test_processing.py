@@ -27,3 +27,6 @@ def test_sort_result_length(simple_list):
     """Проверка, что после сортировки количество элементов не изменилось"""
     result = sort_by_date(simple_list)
     assert len(result) == 2
+
+
+

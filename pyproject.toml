@@ -2,7 +2,10 @@
 name = "python-my-project1"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+pytest = "^9.0.2"
+authors = [
+    {name = "Your Name",email = "you@example.com"}
+]
 readme = "README.md"
 packages = [
     { include = "src" }
@@ -37,8 +40,9 @@ exclude = 'venv'
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 
-
-[dependency-groups]
+[dependency - groups]
 dev = [
     "pytest-cov (>=7.0.0,<8.0.0)"
 ]
+
+
