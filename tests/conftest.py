@@ -34,6 +34,7 @@ def account_input():
 def date_input():
     """Строка с датой в данном формате"""
     return "2024-05-20T10:00:00"
+
   
 
 @pytest.fixture
