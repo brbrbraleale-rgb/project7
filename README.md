@@ -26,6 +26,10 @@ Visa Platinum 7000 79** **** 6361 # выход функции
 #3. Генератор номеров карт (`card_number_generator`)
 Генерирует номера карт в формате `XXXX XXXX XXXX XXXX` в заданном диапазоне.
 
+Есть декоратор "log" для обработки, случае ошибки логирует её тип и входные параметры args и kwargs.
+Фикстура get_log: Вынесена в conftest.py. Она облегчает работу с capsys, позволяя тестам получать 
+ вывод консоли одной командой без дублирования кода.
+Тестирование: Набор тестов в test_decorators.py проверяет два ключевых сценария — успешный возврат значения и исключений (например, ZeroDivisionError).
 
 ## Требования (Requirements)
 
@@ -61,6 +65,8 @@ pip install -r requirements.txt
 1. Установите `pytest`:
    ```
    pip install pytest
+2. для создания отчёта HTML команды: poetry add -G dev pytest, poetry add -G dev pytest-cov,  pytest --cov, 
+3. poetry run pytest --cov=src --cov-report=html, pytest --cov --cov-report=html
 
 Документация:
 Дополнительную информацию о структуре проекта и API можно найти в документации.README.md
