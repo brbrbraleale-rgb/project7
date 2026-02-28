@@ -35,6 +35,7 @@ def date_input():
     """Строка с датой в данном формате"""
     return "2024-05-20T10:00:00"
 
+  
 
 @pytest.fixture
 def sample_transactions():
@@ -50,3 +51,12 @@ def sample_transactions():
 def card_range_data():
     """Фикстура, возвращающая параметры для диапазона генерации."""
     return {"start": 1, "stop": 3}
+
+
+
+@pytest.fixture
+def get_log(capsys):
+    """Фикстура возвращает функцию, которая читает последний вывод консоли."""
+    def _read():
+        return capsys.readouterr().out.strip()
+    return _read
