@@ -53,3 +53,9 @@ def card_range_data():
 
 
 
+@pytest.fixture
+def get_log(capsys):
+    """Фикстура возвращает функцию, которая читает последний вывод консоли."""
+    def _read():
+        return capsys.readouterr().out.strip()
+    return _read
