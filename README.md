@@ -61,8 +61,8 @@ pip install -r requirements.txt
 1. Установите `pytest`:
    ```
    pip install pytest
-
-Документация:
+для создания отчёта HTML команды: poetry add -G dev pytest, poetry run pytest --cov=src --cov-report=html
+Документация.
 Дополнительную информацию о структуре проекта и API можно найти в документации.README.md
 
 Лицензия:
