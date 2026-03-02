@@ -7,20 +7,21 @@ API_KEY = os.getenv("API_KEY")
 
 
 def convert_to_rub(transaction: dict) -> float:
-    """Принимает транзакцию и возвращает сумму в рублях через ExchangeRate-API."""
-
-    # Извлекли данные
+    """
+    Принимает транзакцию и возвращает сумму в рублях.
+    Если конвертация невозможна, возвращает исходную сумму (не 0.0).
+    """
     amount_data = transaction.get("operationAmount", {})
     amount = float(amount_data.get("amount", 0))
     currency = amount_data.get("currency", {}).get("code")
 
-    # Если уже в рублях возвращаем как есть
-    if currency == "RUB":
+    # Если сумма 0 или валюта уже RUB, возвращаем как есть
+    if amount == 0 or currency == "RUB":
         return amount
 
-    # Конвертация для USD или EUR
+    # Поддерживаемые валюты для конвертации
     if currency in ["USD", "EUR"]:
-        # Исправленный URL: добавлен v6 и правильные слеши по совету из интернета
+        #  формат URL для v6 с указанием суммы
         url = f"https://v6.exchangerate-api.com/v6/{API_KEY}/pair/{currency}/RUB/{amount}"
 
         try:
@@ -28,11 +29,24 @@ def convert_to_rub(transaction: dict) -> float:
             response.raise_for_status()
             data = response.json()
 
-            # Проверяем, что API вернуло статус "success" по совету из интернета
+            # Проверка успешного статуса и извлечение результата
             if data.get("result") == "success":
-                return float(data.get("conversion_result", 0.0))
-
+                return float(data.get("conversion_result", amount))
         except (requests.RequestException, ValueError, KeyError):
-            return 0.0
+            # В случае ошибки API возвращаем исходную сумму, чтобы не терять данные
+            return amount
 
-    return 0.0
+    return amount
+
+
+
+test_transaction = {
+    "operationAmount": {
+        "amount": "20.00",
+        "currency": {"code": "USD"}
+    }
+}
+
+# Вызов функции
+result = convert_to_rub(test_transaction)
+print(f"Результат конвертации: {result} RUB")
