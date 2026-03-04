@@ -42,7 +42,7 @@ def convert_to_rub(transaction: dict) -> float:
 
 test_transaction = {
     "operationAmount": {
-        "amount": "20.00",
+        "amount": "300.00",
         "currency": {"code": "USD"}
     }
 }
