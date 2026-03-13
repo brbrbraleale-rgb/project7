@@ -1,12 +1,15 @@
 import os
 
-# Импортируем функции из модулей папки src
-from utils import get_financial_transactions
 from file_readers import read_financial_operations
-from processing import filter_by_state , sort_by_date
 from generators import filter_by_currency
 from process_bank import process_bank_search
-from widget import get_date , mask_account_card
+from processing import filter_by_state
+from processing import sort_by_date
+# Импортируем функции из модулей папки src
+from utils import get_financial_transactions
+from widget import get_date
+from widget import mask_account_card
+
 
 def main():
 
@@ -26,7 +29,7 @@ def main():
         # Здесь логика загрузки JSON
         file_path = os.path.join('data', 'operations.json')
 
-        #вызов готовой функции теперь она станет цветной в импорте
+        # вызов готовой функции теперь она станет цветной в импорте
         data = get_financial_transactions(file_path)
     elif choice == "2":
         print("Программа: Для обработки выбран CSV-файл.")
@@ -40,13 +43,12 @@ def main():
         file_path = os.path.join('data', 'transactions.xlsx')
         data = read_financial_operations(file_path)
 
-
     else:
-        #ЗАВЕРШЕНИЕ: Если выбор не 1, 2 или 3, выводим ошибку и выходим из функции.
+        # ЗАВЕРШЕНИЕ: Если выбор не 1, 2 или 3, выводим ошибку и выходим из функции.
         print("Программа: Ошибка. Такого пункта меню нет.")
         return  # Этот оператор остановит выполнение main
 
-        #если программа дошла сюда, 'data' существует.
+        # если программа дошла сюда, 'data' существует.
     if not data:
         print("Программа: Данные не найдены или файл пуст.")
         return
@@ -72,7 +74,7 @@ def main():
             print(f"Программа: Статус операции \"{user_status}\" недоступен.")
             # Цикл пойдет на новый круг и снова напечатает "Введите статус"
 
-    #Сортировка по дате
+    # Сортировка по дате
     is_sort = input("Программа: Отсортировать операции по дате? Да/Нет\nПользователь: ").strip().lower()
     if is_sort == "да":
         order = input("Программа: Отсортировать по возрастанию или по убыванию?\nПользователь: ").strip().lower()
@@ -80,7 +82,7 @@ def main():
         is_reverse = True if "убыв" in order else False
         data = sort_by_date(data, is_reverse)
 
-    #Фильтрация по валюте (только рубли)
+    # Фильтрация по валюте (только рубли)
     only_rub = input("Программа: Выводить только рублевые транзакции? Да/Нет\nПользователь: ").strip().lower()
 
     if only_rub == "да":
@@ -90,7 +92,7 @@ def main():
     else:
         print("Программа: Выводятся транзакции во всех валютах.")
 
-    #Фильтрация по ключевому слову в описании
+    # Фильтрация по ключевому слову в описании
     is_filter_desc = input(
         "Программа: Отфильтровать список транзакций по определенному слову в описании? Да/Нет\nПользователь: ").strip().lower()
     if is_filter_desc == "да":
@@ -98,7 +100,7 @@ def main():
         # Использую ту самую функцию с регулярными выражениями, которую писала в начале
         data = process_bank_search(data, search_query)
 
-    #итоговая распечатка
+    # итоговая распечатка
     print("\nПрограмма: Распечатываю итоговый список транзакций...")
 
     if not data:
@@ -126,4 +128,4 @@ def main():
 
 
 if __name__ == "__main__":
-            main()
+    main()

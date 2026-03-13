@@ -1,23 +1,30 @@
-import pandas as pd
 import os
+from typing import Any, cast
+
+import pandas as pd
 
 
-def read_financial_operations(file_path):
+def read_financial_operations(file_path: str) -> list[dict[str, Any]]:
     """Считывает данные из CSV или XLSX и возвращает список словарей."""
     if not os.path.exists(file_path):
         return []
     try:
-        if file_path.endswith('.csv'):
-            # Считываем CSV с автоопределением разделителя
-            df = pd.read_csv(file_path, sep=None, engine='python')
+        if file_path.endswith(".csv"):
+            df = pd.read_csv(file_path, sep=None, engine="python")
         else:
-            # Считываем Excel
             df = pd.read_excel(file_path)
 
-        # Преобразуем в список словарей, заменяя пустоты (NaN) на None
-        return df.where(pd.notnull(df), None).to_dict(orient='records')
-    except Exception:
+        # 1. Решаем ошибку типа через cast (говорим PyCharm, что ключи — это точно строки)
+        data = df.astype(object).replace({pd.NA: None, float("nan"): None}).to_dict(orient="records")
+        return cast(list[dict[str, Any]], data)
+
+    except (FileNotFoundError, pd.errors.EmptyDataError, ValueError):
         return []
+    # noinspection PyBroadException
+    except (FileNotFoundError, pd.errors.EmptyDataError, ValueError, RuntimeError):
+        return []
+
+
 
 
 # Вводные данные (пути)
@@ -37,6 +44,3 @@ excel_data = read_financial_operations(path_excel)
 print(f"Excel: Найдено {len(excel_data)} операций")
 if excel_data:
     print(f"Первая запись Excel: {excel_data[0]}")
-
-
-

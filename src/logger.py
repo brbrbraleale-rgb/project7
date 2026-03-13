@@ -1,3 +1,4 @@
+
 import logging
 import os
 
@@ -10,7 +11,7 @@ if not os.path.exists(LOG_DIR):
     os.makedirs(LOG_DIR)
 
 
-def setup_logger(name):
+def setup_logger(name: str) -> logging.Logger:
     logger = logging.getLogger(name)
 
     # Путь будет: корень/logs/имя_модуля.log

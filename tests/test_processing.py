@@ -1,5 +1,7 @@
 import pytest
-from processing import filter_by_state, sort_by_date
+
+from processing import filter_by_state
+from processing import sort_by_date
 
 
 def test_filter_executed(simple_list):
@@ -7,6 +9,7 @@ def test_filter_executed(simple_list):
     result = filter_by_state(simple_list, "EXECUTED")
     assert len(result) == 1
     assert result[0]["state"] == "EXECUTED"
+
 
 def test_filter_empty(simple_list):
     """Проверка, что при отсутствии совпадений список пуст"""
@@ -23,10 +26,8 @@ def test_sort_order(simple_list, reverse_flag, expected_date):
     result = sort_by_date(simple_list, reverse=reverse_flag)
     assert result[0]["date"] == expected_date
 
+
 def test_sort_result_length(simple_list):
     """Проверка, что после сортировки количество элементов не изменилось"""
     result = sort_by_date(simple_list)
     assert len(result) == 2
-
-
-

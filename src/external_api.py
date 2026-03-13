@@ -1,4 +1,5 @@
 import os
+
 import requests
 from dotenv import load_dotenv
 
@@ -37,7 +38,6 @@ def convert_to_rub(transaction: dict) -> float:
             return amount
 
     return amount
-
 
 
 test_transaction = {

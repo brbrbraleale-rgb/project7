@@ -1,5 +1,8 @@
 import pytest
-from masks import get_mask_card_number, get_mask_account
+
+from masks import get_mask_account
+from masks import get_mask_card_number
+
 
 # Тесты для get_mask_card_number
 @pytest.mark.parametrize("card_in, expected", [
@@ -9,6 +12,7 @@ from masks import get_mask_card_number, get_mask_account
 def test_get_mask_card_number_param(card_in, expected):
     """тест маскировки карты"""
     assert get_mask_card_number(card_in) == expected
+
 
 def test_get_mask_card_number_fixture(card_number_fixture):
     """Тест маскировки карты с использованием фикстуры"""
@@ -24,8 +28,7 @@ def test_get_mask_account_param(acc_in, expected):
     """ тест маскировки счета"""
     assert get_mask_account(acc_in) == expected
 
+
 def test_get_mask_account_fixture(account_number_fixture):
     """Тест маскировки счета с использованием фикстуры"""
     assert get_mask_account(account_number_fixture) == "** 4305"
-
-

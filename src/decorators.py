@@ -1,34 +1,31 @@
 import functools
+from typing import Any, Callable, Optional
 
-def log(filename=None):
+
+def log(filename: Optional[str] = None) -> Callable:
     """Декоратор для логирования работы функции в файл или консоль."""
-    def decorator(func):
+    def decorator(func: Callable) -> Callable:
         @functools.wraps(func)
-        def wrapper(*args, **kwargs):
-            msg = ""
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
             try:
                 result = func(*args, **kwargs)
                 msg = f"{func.__name__} ok"
-                return result
-            except Exception as e:
-                # Имя функции, тип ошибки и входные параметры
-                error_type = type(e).__name__
-                msg = f"{func.__name__} error: {error_type}. Inputs: {args}, {kwargs}"
-                raise e
-            finally:
-                # Логируем результат или ошибку
+                # Сразу логируем успех
                 if filename:
-                    # Используем encoding="utf-8" для корректной работы с текстом по совету германа
                     with open(filename, "a", encoding="utf-8") as f:
                         f.write(msg + "\n")
                 else:
                     print(msg)
+                return result
+            except Exception as e:
+                error_type = type(e).__name__
+                msg = f"{func.__name__} error: {error_type}. Inputs: {args}, {kwargs}"
+                # Сразу логируем ошибку
+                if filename:
+                    with open(filename, "a", encoding="utf-8") as f:
+                        f.write(msg + "\n")
+                else:
+                    print(msg)
+                raise e  # Теперь после raise ничего не стоит, и ошибки unreachable не будет
         return wrapper
     return decorator
-
-@log(filename="mylog.txt")
-def my_function(x, y):
-    return x + y
-
-# Вызов для проверки:
-my_function(1, 2)

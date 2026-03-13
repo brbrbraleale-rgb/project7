@@ -1,6 +1,7 @@
 import re
 from collections import Counter
 
+
 def process_bank_search(data: list[dict], search: str) -> list[dict]:
     """
     Фильтрует список транзакций по наличию строки поиска в описании (description).
@@ -16,7 +17,6 @@ def process_bank_search(data: list[dict], search: str) -> list[dict]:
             result.append(operation)
 
     return result
-
 
 
 def process_bank_operations(data: list[dict], categories: list) -> dict:
@@ -35,7 +35,3 @@ def process_bank_operations(data: list[dict], categories: list) -> dict:
     # Если нужно, чтобы в итоговом словаре были те категории,
     # по которым 0 операций дополнить результат:
     return {category: counts.get(category, 0) for category in categories}
-
-
-
-

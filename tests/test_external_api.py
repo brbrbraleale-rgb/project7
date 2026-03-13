@@ -1,6 +1,8 @@
 import unittest
 from unittest.mock import patch
+
 from src.external_api import convert_to_rub
+
 
 class TestConvertToRub(unittest.TestCase):
 
@@ -27,6 +29,7 @@ class TestConvertToRub(unittest.TestCase):
     @patch('requests.get')
     def test_convert_to_rub_api_error(self, mock_get):
         import requests
+
         # Имитируем ошибку, которую ваша функция точно ловит
         mock_get.side_effect = requests.RequestException("API Error")
 
@@ -40,9 +43,6 @@ class TestConvertToRub(unittest.TestCase):
         result = convert_to_rub(transaction)
         self.assertEqual(result, 100.0)
 
+
 if __name__ == '__main__':
     unittest.main()
-
-
-
-

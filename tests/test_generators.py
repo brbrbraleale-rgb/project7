@@ -1,3 +1,5 @@
+from generators import card_number_generator
+from generators import transaction_descriptions
 import pytest
 
 from generators import filter_by_currency
@@ -33,9 +35,6 @@ def test_filter_by_currency_invalid_structure():
     assert result[0]["operationAmount"]["currency"]["code"] == "USD"
 
 
-from generators import transaction_descriptions
-
-
 @pytest.mark.parametrize(
     "index, expected_desc",
     [
@@ -63,8 +62,6 @@ def test_transaction_descriptions_structure(input_data, expected_length):
     result = list(transaction_descriptions(input_data))
     assert len(result) == expected_length
 
-
-from generators import card_number_generator
 
 """Проверка корректности формата и значений (используем фикстуру)"""
 
